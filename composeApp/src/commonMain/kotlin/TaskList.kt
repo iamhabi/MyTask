@@ -73,7 +73,11 @@ fun TaskListItem(
                 expanded = isExpnaded.value,
                 onDismissRequest = { isExpnaded.value = false },
                 content = {
-                    DeleteItem(onDeleteItem)
+                    DeleteItem {
+                        onDeleteItem()
+
+                        isExpnaded.value = false
+                    }
 
                     EditItem(taskItem)
                 }
