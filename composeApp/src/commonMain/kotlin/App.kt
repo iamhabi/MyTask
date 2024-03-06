@@ -1,7 +1,4 @@
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -15,15 +12,26 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     MaterialTheme {
-        val items = remember { mutableStateListOf<TaskItem>() }
+        val taskItems = remember { mutableStateListOf<TaskItem>() }
         
-        Column(Modifier.fillMaxWidth().padding(48.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(modifier = Modifier.weight(1F)) {
-                TaskList(items)
+        Row(Modifier.fillMaxWidth().padding(48.dp)) {
+            Column(
+                modifier = Modifier.weight(3F)
+            ) {
+
             }
-            
-            AddTask { title ->
-                items.add(createNewTaskItem(title))
+
+            Column(
+                modifier = Modifier.weight(7F),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.weight(1F)) {
+                    TaskList(taskItems)
+                }
+
+                AddTask { title ->
+                    taskItems.add(createNewTaskItem(title))
+                }
             }
         }
     }
