@@ -6,12 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
 
 @Composable
 fun EditTask(
     taskItem: TaskItem,
     isOpenEdit: MutableState<Boolean>
 ) {
+    fun editTask(title: String) {
+        taskItem.title = title
+        isOpenEdit.value = false
+    }
+
     val originalTitle = taskItem.title
 
     val input = remember { mutableStateOf(taskItem.title) }
@@ -22,16 +29,18 @@ fun EditTask(
             OutlinedTextField(
                 value = input.value,
                 onValueChange = { input.value = it },
-                label = { Text("$originalTitle ->") }
+                modifier = Modifier.onKeyUp(
+                    Key.Enter,
+                    action = { editTask(input.value) }
+                ),
+                label = { Text("$originalTitle ->") },
+                singleLine = true
             )
                },
         onDismissRequest = { isOpenEdit.value = false },
         confirmButton = {
             TextButton(
-                onClick = {
-                    taskItem.title = input.value
-                    isOpenEdit.value = false
-                          },
+                onClick = { editTask(input.value) },
                 content = { Text("OK") }
             )
                         },

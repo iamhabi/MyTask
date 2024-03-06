@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -35,17 +36,25 @@ fun AddTask(
 ) {
     val input = remember { mutableStateOf("") }
 
+    fun createTask(title: String) {
+        onCreateTask(title)
+
+        input.value = ""
+    }
+
     Row(verticalAlignment = Alignment.CenterVertically) {
         OutlinedTextField(
             value = input.value,
             onValueChange = { input.value = it },
-            label = { Text("Input") }
+            modifier = Modifier.onKeyUp(Key.Enter, action = { createTask(input.value) }),
+            label = { Text("Input") },
+            singleLine = true
         )
         
         Spacer(modifier = Modifier.width(10.dp))
         
         IconButton(
-            onClick = { onCreateTask(input.value) },
+            onClick = { createTask(input.value) },
             content = {
                 Icon(
                     imageVector = Icons.Default.AddCircle,
