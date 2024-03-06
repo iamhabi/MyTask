@@ -8,7 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import group.AddGroup
+import group.TaskGroup
+import group.TaskGroupList
+import group.createNewTaskGroup
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import task.AddTask
+import task.createNewTaskItem
 
 @Composable
 @Preview
@@ -17,7 +23,7 @@ fun App() {
         val taskGroups = remember { mutableStateListOf<TaskGroup>() }
         val selectedIndex = remember { mutableStateOf(-1) }
         
-        Row(Modifier.fillMaxWidth().padding(48.dp)) {
+        Row(Modifier.fillMaxWidth().padding(16.dp)) {
             Column(
                 modifier = Modifier.weight(3F),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -29,7 +35,7 @@ fun App() {
                     )
                 }
 
-                AddTask { title ->
+                AddGroup { title ->
                     taskGroups.add(createNewTaskGroup(title))
                 }
             }

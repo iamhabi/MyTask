@@ -17,6 +17,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import task.EditTask
+import task.TaskItem
 
 @Composable
 fun TaskList(

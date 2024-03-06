@@ -1,5 +1,8 @@
+package group
+
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import task.TaskItem
 import kotlin.random.Random
 
 data class TaskGroup(

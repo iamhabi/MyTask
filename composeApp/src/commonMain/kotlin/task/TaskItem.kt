@@ -1,3 +1,5 @@
+package task
+
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import kotlin.random.Random

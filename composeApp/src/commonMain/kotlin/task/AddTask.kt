@@ -1,3 +1,5 @@
+package task
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -14,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.unit.dp
+import onKeyUp
 
 @Composable
 fun AddTask(
@@ -40,7 +43,7 @@ fun AddTask(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = Modifier.width(8.dp))
 
         IconButton(
             onClick = { createTask(input.value) },
