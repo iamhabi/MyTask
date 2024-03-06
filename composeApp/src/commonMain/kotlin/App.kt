@@ -37,6 +37,10 @@ fun AddTask(
     val input = remember { mutableStateOf("") }
 
     fun createTask(title: String) {
+        if (title == "") {
+            return
+        }
+
         onCreateTask(title)
 
         input.value = ""
