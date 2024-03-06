@@ -3,6 +3,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +15,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     MaterialTheme {
         val taskGroups = remember { mutableStateListOf<TaskGroup>() }
-        val taskItems = remember { mutableStateListOf<TaskItem>() }
+        val selectedIndex = remember { mutableStateOf(-1) }
         
         Row(Modifier.fillMaxWidth().padding(48.dp)) {
             Column(
@@ -22,7 +23,10 @@ fun App() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(modifier = Modifier.weight(1F)) {
-                    TaskGroupList(taskGroups)
+                    TaskGroupList(
+                        taskGroups = taskGroups,
+                        selectedIndex = selectedIndex
+                    )
                 }
 
                 AddTask { title ->
@@ -46,11 +50,13 @@ fun App() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(modifier = Modifier.weight(1F)) {
-                    TaskList(taskItems)
+                    if (selectedIndex.value != -1) {
+                        TaskList(taskGroups[selectedIndex.value].items)
+                    }
                 }
 
                 AddTask { title ->
-                    taskItems.add(createNewTaskItem(title))
+                    taskGroups[selectedIndex.value].items.add(createNewTaskItem(title))
                 }
             }
         }

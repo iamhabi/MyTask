@@ -1,9 +1,11 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -11,6 +13,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -20,18 +23,25 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TaskGroupList(
-    taskGroups: SnapshotStateList<TaskGroup>
+    taskGroups: SnapshotStateList<TaskGroup>,
+    selectedIndex: MutableState<Int>
 ) {
     val listState = rememberLazyListState()
 
     LazyColumn(state = listState) {
-        items(taskGroups) {
-            TaskGroupItem(
-                taskGroup = it,
-                onDeleteItem = { taskGroups.remove(it) }
-            )
-            
-            Divider()
+        itemsIndexed(taskGroups) { index, taskGroup ->
+            Box(
+                modifier = Modifier.clickable {
+                    selectedIndex.value = index
+                }
+            ) {
+                TaskGroupItem(
+                    taskGroup = taskGroup,
+                    onDeleteItem = { taskGroups.remove(taskGroup) }
+                )
+
+                Divider()
+            }
         }
     }
 }
