@@ -42,6 +42,8 @@ fun TaskListItem(
     onDeleteItem: () -> Unit
 ) {
     val isExpnaded = remember { mutableStateOf(false) }
+
+    val isOpenEdit = remember { mutableStateOf(false) }
     
     Row(verticalAlignment = Alignment.CenterVertically) {
         Checkbox(
@@ -79,8 +81,21 @@ fun TaskListItem(
                         isExpnaded.value = false
                     }
 
-                    EditItem(taskItem)
+                    EditItem {
+                        isExpnaded.value = false
+
+                        isOpenEdit.value = true
+                    }
                 }
+            )
+        }
+    }
+
+    when {
+        isOpenEdit.value -> {
+            EditTask(
+                taskItem = taskItem,
+                isOpenEdit = isOpenEdit
             )
         }
     }
@@ -108,11 +123,11 @@ fun DeleteItem(
 }
 
 @Composable
-fun EditItem(taskItem: TaskItem) {
-    val isOpenEdit = remember { mutableStateOf(false) }
-
+fun EditItem(
+    onDialogEditTask: () -> Unit
+) {
     DropdownMenuItem(
-        onClick = { isOpenEdit.value = true },
+        onClick = onDialogEditTask,
         content = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -126,13 +141,4 @@ fun EditItem(taskItem: TaskItem) {
             }
         }
     )
-
-    when {
-        isOpenEdit.value -> {
-            EditTask(
-                taskItem = taskItem,
-                isOpenEdit = isOpenEdit
-            )
-        }
-    }
 }
