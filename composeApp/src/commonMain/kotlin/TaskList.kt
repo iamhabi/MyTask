@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -53,7 +52,7 @@ fun TaskListItem(
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(
-            text = taskItem.title.value,
+            text = taskItem.title,
             modifier = Modifier.weight(1F)
         )
 
