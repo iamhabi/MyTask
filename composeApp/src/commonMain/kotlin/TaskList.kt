@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -28,8 +29,7 @@ fun TaskList(
         items(taskItems) { taskItem ->
             TaskListItem(
                 taskItem = taskItem,
-                onDeleteItem = { taskItems.remove(taskItem) },
-                onEditItem = {}
+                onDeleteItem = { taskItems.remove(taskItem) }
             )
 
             Divider()
@@ -40,8 +40,7 @@ fun TaskList(
 @Composable
 fun TaskListItem(
     taskItem: TaskItem,
-    onDeleteItem: () -> Unit,
-    onEditItem: () -> Unit
+    onDeleteItem: () -> Unit
 ) {
     val isExpnaded = remember { mutableStateOf(false) }
     
@@ -54,7 +53,7 @@ fun TaskListItem(
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(
-            text = taskItem.title,
+            text = taskItem.title.value,
             modifier = Modifier.weight(1F)
         )
 
@@ -77,7 +76,7 @@ fun TaskListItem(
                 content = {
                     DeleteItem(onDeleteItem)
 
-                    EditItem(onEditItem)
+                    EditItem(taskItem)
                 }
             )
         }
@@ -106,11 +105,11 @@ fun DeleteItem(
 }
 
 @Composable
-fun EditItem(
-    onEditItem: () -> Unit
-) {
+fun EditItem(taskItem: TaskItem) {
+    val isOpenEdit = remember { mutableStateOf(false) }
+
     DropdownMenuItem(
-        onClick = onEditItem,
+        onClick = { isOpenEdit.value = true },
         content = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -124,4 +123,13 @@ fun EditItem(
             }
         }
     )
+
+    when {
+        isOpenEdit.value -> {
+            EditTask(
+                taskItem = taskItem,
+                isOpenEdit = isOpenEdit
+            )
+        }
+    }
 }

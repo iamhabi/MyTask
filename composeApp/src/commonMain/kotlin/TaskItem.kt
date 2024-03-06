@@ -4,10 +4,10 @@ import kotlin.random.Random
 
 data class TaskItem(
     val id: Long,
-    var title: String,
+    var title: MutableState<String>,
     var isDone: MutableState<Boolean>
 )
 
 fun createNewTaskItem(title: String): TaskItem {
-    return TaskItem(Random.nextLong(), title, mutableStateOf(false))
+    return TaskItem(Random.nextLong(), mutableStateOf(title), mutableStateOf(false))
 }
