@@ -1,4 +1,5 @@
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -12,13 +13,32 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     MaterialTheme {
+        val taskGroups = remember { mutableStateListOf<TaskGroup>() }
         val taskItems = remember { mutableStateListOf<TaskItem>() }
         
         Row(Modifier.fillMaxWidth().padding(48.dp)) {
             Column(
-                modifier = Modifier.weight(3F)
+                modifier = Modifier.weight(3F),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Box(modifier = Modifier.weight(1F)) {
+                    TaskGroupList(taskGroups)
+                }
 
+                AddTask { title ->
+                    taskGroups.add(createNewTaskGroup(title))
+                }
+            }
+
+            Box(
+                modifier = Modifier.weight(1F),
+                contentAlignment = Alignment.Center
+            ) {
+                Divider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp)
+                )
             }
 
             Column(
