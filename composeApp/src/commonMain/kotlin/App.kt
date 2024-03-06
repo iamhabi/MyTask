@@ -22,7 +22,7 @@ fun App() {
                 TaskList(items)
             }
             
-            InputField { title ->
+            AddTask { title ->
                 items.add(createNewTaskItem(title))
             }
         }
@@ -30,7 +30,7 @@ fun App() {
 }
 
 @Composable
-fun InputField(
+fun AddTask(
     onCreateTask: (String) -> Unit
 ) {
     val input = remember { mutableStateOf("") }
