@@ -4,18 +4,16 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import group.AddTaskGroup
-import group.GroupView
+import group.GroupViewBigLayout
+import group.GroupViewSmallLayout
 import group.createNewTaskGroup
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import task.AddTask
@@ -43,7 +41,7 @@ fun App() {
                     Box(
                         modifier = Modifier.weight(4F)
                     ) {
-                        GroupView(taskGroups, selectedIndex)
+                        GroupViewBigLayout(taskGroups, selectedIndex)
                     }
                 }
 
@@ -83,30 +81,11 @@ fun App() {
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.End
-                    ) {
-                        IconButton(
-                            onClick = { showGroup.value = false },
-                            content = {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Close group"
-                                )
-                            }
-                        )
-
-                        Box(modifier = Modifier.weight(1F)) {
-                            TaskGroupList(
-                                taskGroups = taskGroups,
-                                selectedIndex = selectedIndex
-                            )
-                        }
-
-                        AddTaskGroup { title ->
-                            taskGroups.add(createNewTaskGroup(title))
-                        }
-                    }
+                    GroupViewSmallLayout(
+                        taskGroups = taskGroups,
+                        selectedIndex = selectedIndex,
+                        onClose = { showGroup.value = false }
+                    )
                 }
             }
         }

@@ -9,12 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import TaskGroupList
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 
 @Composable
-fun GroupView(
+fun GroupViewBigLayout(
     taskGroups: SnapshotStateList<TaskGroup>,
     selectedIndex: MutableState<Int>
-    
 ) {
     Row {
         Column(
@@ -42,6 +45,38 @@ fun GroupView(
                     .fillMaxHeight()
                     .width(1.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun GroupViewSmallLayout(
+    taskGroups: SnapshotStateList<TaskGroup>,
+    selectedIndex: MutableState<Int>,
+    onClose: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.End
+    ) {
+        IconButton(
+            onClick = onClose,
+            content = {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close group"
+                )
+            }
+        )
+
+        Box(modifier = Modifier.weight(1F)) {
+            TaskGroupList(
+                taskGroups = taskGroups,
+                selectedIndex = selectedIndex
+            )
+        }
+
+        AddTaskGroup { title ->
+            taskGroups.add(createNewTaskGroup(title))
         }
     }
 }
