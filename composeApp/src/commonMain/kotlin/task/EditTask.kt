@@ -1,6 +1,5 @@
 package task
 
-import task.TaskItem
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
