@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import group.AddGroup
 import group.GroupView
-import group.TaskGroup
 import group.createNewTaskGroup
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import task.AddTask
@@ -26,10 +25,14 @@ import task.createNewTaskItem
 @Composable
 @Preview
 fun App() {
-    val taskGroups = remember { mutableStateListOf<TaskGroup>() }
-    val selectedIndex = remember { mutableStateOf(-1) }
+    val taskGroups = remember { mutableStateListOf(createNewTaskGroup("Default")) }
+    val selectedIndex = remember { mutableStateOf(0) }
 
     val showGroup = remember { mutableStateOf(false) }
+
+    if (selectedIndex.value != -1) {
+        showGroup.value = false
+    }
 
     MaterialTheme {
         BoxWithConstraints(Modifier.fillMaxWidth().padding(16.dp)) {
@@ -60,11 +63,7 @@ fun App() {
                     }
 
                     Box(modifier = Modifier.weight(1F)) {
-                        if (selectedIndex.value != -1) {
-                            showGroup.value = false
-
-                            TaskList(taskGroups[selectedIndex.value].items)
-                        }
+                        TaskList(taskGroups[selectedIndex.value].items)
                     }
 
                     AddTask { title ->
