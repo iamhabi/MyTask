@@ -1,10 +1,5 @@
-package group
-
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -21,6 +16,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import group.TaskGroup
 
 @Composable
 fun TaskGroupList(
@@ -31,7 +27,7 @@ fun TaskGroupList(
 
     LazyColumn(state = listState) {
         itemsIndexed(taskGroups) { index, taskGroup ->
-            Box(
+            Column(
                 modifier = Modifier.clickable {
                     selectedIndex.value = index
                 }
