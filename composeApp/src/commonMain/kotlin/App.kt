@@ -1,5 +1,4 @@
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -9,12 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import group.AddGroup
+import group.GroupView
 import group.TaskGroup
-import group.createNewTaskGroup
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import task.AddTask
 import task.createNewTaskItem
@@ -31,31 +28,10 @@ fun App() {
 
             Row {
                 if (isLarge) {
-                    Column(
-                        modifier = Modifier.weight(3.5F),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(modifier = Modifier.weight(1F)) {
-                            TaskGroupList(
-                                taskGroups = taskGroups,
-                                selectedIndex = selectedIndex
-                            )
-                        }
-
-                        AddGroup { title ->
-                            taskGroups.add(createNewTaskGroup(title))
-                        }
-                    }
-
                     Box(
-                        modifier = Modifier.weight(0.5F),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.weight(4F)
                     ) {
-                        Divider(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .width(1.dp)
-                        )
+                        GroupView(taskGroups, selectedIndex)
                     }
                 }
 
