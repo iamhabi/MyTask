@@ -38,7 +38,9 @@ fun AddTask(
         OutlinedTextField(
             value = input.value,
             onValueChange = { input.value = it },
-            modifier = Modifier.onKeyUp(Key.Enter, action = { createTask(input.value) }),
+            modifier = Modifier
+                .weight(1F)
+                .onKeyUp(Key.Enter, action = { createTask(input.value) }),
             label = { Text("Input") },
             singleLine = true
         )

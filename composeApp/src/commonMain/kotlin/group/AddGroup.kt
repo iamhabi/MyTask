@@ -38,7 +38,9 @@ fun AddGroup(
         OutlinedTextField(
             value = input.value,
             onValueChange = { input.value = it },
-            modifier = Modifier.onKeyUp(Key.Enter, action = { createGroup(input.value) }),
+            modifier = Modifier
+                .weight(3F)
+                .onKeyUp(Key.Enter, action = { createGroup(input.value) }),
             label = { Text("New Group") },
             singleLine = true
         )
@@ -46,6 +48,7 @@ fun AddGroup(
         Spacer(modifier = Modifier.width(8.dp))
         
         IconButton(
+            modifier = Modifier.weight(1F),
             onClick = { createGroup(input.value) },
             content = {
                 Icon(
