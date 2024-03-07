@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import group.AddGroup
+import group.AddTaskGroup
 import group.GroupView
 import group.createNewTaskGroup
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -103,7 +103,7 @@ fun App() {
                             )
                         }
 
-                        AddGroup { title ->
+                        AddTaskGroup { title ->
                             taskGroups.add(createNewTaskGroup(title))
                         }
                     }

@@ -28,7 +28,7 @@ fun GroupView(
                 )
             }
     
-            AddGroup { title ->
+            AddTaskGroup { title ->
                 taskGroups.add(createNewTaskGroup(title))
             }
         }

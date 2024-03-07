@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import onKeyUp
 
 @Composable
-fun AddGroup(
+fun AddTaskGroup(
     onCreateGroup: (String) -> Unit
 ) {
     val input = remember { mutableStateOf("") }
