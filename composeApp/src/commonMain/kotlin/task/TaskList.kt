@@ -1,5 +1,6 @@
 package task
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -57,7 +58,11 @@ fun TaskListItem(
 
         Text(
             text = taskItem.title,
-            modifier = Modifier.weight(1F)
+            modifier = Modifier
+                .weight(1F)
+                .clickable {
+
+                },
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -93,13 +98,11 @@ fun TaskListItem(
         }
     }
 
-    when {
-        isOpenEdit.value -> {
-            EditTask(
-                taskItem = taskItem,
-                isOpenEdit = isOpenEdit
-            )
-        }
+    if (isOpenEdit.value) {
+        EditTask(
+            taskItem = taskItem,
+            isOpenEdit = isOpenEdit
+        )
     }
 }
 

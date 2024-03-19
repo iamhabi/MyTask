@@ -73,20 +73,18 @@ fun App() {
     }
 
     MaterialTheme {
-        when {
-            showGroup.value -> {
-                Box(
-                    modifier = Modifier
-                        .background(Color.White)
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    GroupViewSmallLayout(
-                        taskGroups = taskGroups,
-                        selectedIndex = selectedIndex,
-                        onClose = { showGroup.value = false }
-                    )
-                }
+        if (showGroup.value) {
+            Box(
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                GroupViewSmallLayout(
+                    taskGroups = taskGroups,
+                    selectedIndex = selectedIndex,
+                    onClose = { showGroup.value = false }
+                )
             }
         }
     }
