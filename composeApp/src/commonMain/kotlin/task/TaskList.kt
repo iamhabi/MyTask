@@ -46,9 +46,13 @@ fun TaskListItem(
 ) {
     val isExpnaded = remember { mutableStateOf(false) }
 
+    val isOpenDetail = remember { mutableStateOf(false) }
     val isOpenEdit = remember { mutableStateOf(false) }
     
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable { isOpenDetail.value = true }
+    ) {
         Checkbox(
             checked = taskItem.isDone.value,
             onCheckedChange = { taskItem.isDone.value = !taskItem.isDone.value }
@@ -58,11 +62,7 @@ fun TaskListItem(
 
         Text(
             text = taskItem.title,
-            modifier = Modifier
-                .weight(1F)
-                .clickable {
-
-                },
+            modifier = Modifier.weight(1F)
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -96,6 +96,13 @@ fun TaskListItem(
                 }
             )
         }
+    }
+
+    if (isOpenDetail.value) {
+        TaskDetail(
+            taskItem = taskItem,
+            isOpenDetail = isOpenDetail
+        )
     }
 
     if (isOpenEdit.value) {
