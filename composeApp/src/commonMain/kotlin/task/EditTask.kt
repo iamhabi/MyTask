@@ -1,6 +1,8 @@
 package task
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -11,6 +13,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun EditTask(
@@ -52,7 +55,9 @@ fun EditTask(
     AlertDialog(
         title = { Text("Edit task") },
         text = {
-            Column {
+            Column(
+                modifier = Modifier.padding(100.dp)
+            ) {
                 OutlinedTextField(
                     value = title.value,
                     onValueChange = { title.value = it },
@@ -65,6 +70,7 @@ fun EditTask(
                 OutlinedTextField(
                     value = description.value,
                     onValueChange = { description.value = it },
+                    modifier = Modifier.fillMaxHeight(),
                     label = { Text("Description") }
                 )
             }
