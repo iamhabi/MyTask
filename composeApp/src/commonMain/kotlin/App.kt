@@ -3,12 +3,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -53,15 +55,22 @@ fun App() {
                     modifier = Modifier.weight(7F)
                 ) {
                     if (!isLarge && !isOpenDetail.value) {
-                        IconButton(
-                            onClick = { showGroup.value = true },
-                            content = {
-                                Icon(
-                                    imageVector = Icons.Default.Menu,
-                                    contentDescription = "Open group"
-                                )
-                            }
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(
+                                onClick = { showGroup.value = true },
+                                content = {
+                                    Icon(
+                                        imageVector = Icons.Default.Menu,
+                                        contentDescription = "Open group"
+                                    )
+                                }
+                            )
+
+                            Text(
+                                text = taskGroups[selectedIndex.value].title,
+                                maxLines = 1
+                            )
+                        }
                     }
 
                     if (isOpenDetail.value) {
