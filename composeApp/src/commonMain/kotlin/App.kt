@@ -54,25 +54,6 @@ fun App() {
                 Column(
                     modifier = Modifier.weight(7F)
                 ) {
-                    if (!isLarge && !isOpenDetail.value) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(
-                                onClick = { showGroup.value = true },
-                                content = {
-                                    Icon(
-                                        imageVector = Icons.Default.Menu,
-                                        contentDescription = "Open group"
-                                    )
-                                }
-                            )
-
-                            Text(
-                                text = taskGroups[selectedIndex.value].title,
-                                maxLines = 1
-                            )
-                        }
-                    }
-
                     if (isOpenDetail.value) {
                         TaskDetail(
                             taskItem = detailTaskItem.value,
@@ -82,6 +63,25 @@ fun App() {
                             }
                         )
                     } else {
+                        if (!isLarge) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(
+                                    onClick = { showGroup.value = true },
+                                    content = {
+                                        Icon(
+                                            imageVector = Icons.Default.Menu,
+                                            contentDescription = "Open group"
+                                        )
+                                    }
+                                )
+
+                                Text(
+                                    text = taskGroups[selectedIndex.value].title,
+                                    maxLines = 1
+                                )
+                            }
+                        }
+
                         Box(modifier = Modifier.weight(1F)) {
                             TaskList(
                                 taskGroups[selectedIndex.value].items,
