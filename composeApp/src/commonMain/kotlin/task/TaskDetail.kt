@@ -1,11 +1,15 @@
 package task
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -15,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 
@@ -32,7 +35,6 @@ fun TaskDetail(
         isOpenDetail.value = false
     }
 
-    val datePickerState = rememberDatePickerState()
     val showDatePicker = remember { mutableStateOf(false) }
 
     val title = remember {
@@ -99,8 +101,8 @@ fun TaskDetail(
             TextButton(
                 onClick = { showDatePicker.value = true },
                 content = {
-                    if (datePickerState.selectedDateMillis != null) {
-                        Text("${datePickerState.selectedDateMillis}")
+                    if (taskItem.dueDate != null) {
+                        Text("${taskItem.dueDate}")
                     } else {
                         Text("Not setted")
                     }
@@ -130,10 +132,41 @@ fun TaskDetail(
     }
 
     if (showDatePicker.value) {
-        AlertDialog(
-            onDismissRequest = { showDatePicker.value = false },
-            confirmButton = { showDatePicker.value = false },
-            text = { DatePicker(datePickerState) }
-        )
+        DueDatePicker(taskItem, showDatePicker)
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DueDatePicker(
+    taskItem: TaskItem,
+    showDatePicker: MutableState<Boolean>
+) {
+    val datePickerState = rememberDatePickerState()
+
+    DatePickerDialog(
+        content = { DatePicker(datePickerState) },
+        onDismissRequest = {
+            datePickerState.selectedDateMillis = null
+            showDatePicker.value = false
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    taskItem.dueDate = datePickerState.selectedDateMillis
+                    showDatePicker.value = false
+                },
+                content = { Text("OK") }
+            )
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    datePickerState.selectedDateMillis = null
+                    showDatePicker.value = false
+                },
+                content = { Text("Cancel") }
+            )
+        }
+    )
 }
