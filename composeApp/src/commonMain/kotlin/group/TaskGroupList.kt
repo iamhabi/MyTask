@@ -102,13 +102,11 @@ fun TaskGroupItem(
         }
     }
 
-    when {
-        isOpenEdit.value -> {
-            EditTaskGroup(
-                taskGroup = taskGroup,
-                isOpenEdit = isOpenEdit
-            )
-        }
+    if (isOpenEdit.value) {
+        EditTaskGroup(
+            taskGroup = taskGroup,
+            isOpenEdit = isOpenEdit
+        )
     }
 }
 
