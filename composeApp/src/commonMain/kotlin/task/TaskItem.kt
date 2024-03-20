@@ -2,7 +2,6 @@ package task
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import kotlinx.datetime.LocalDateTime
 import kotlin.random.Random
 
 data class TaskItem(
@@ -10,7 +9,7 @@ data class TaskItem(
     var isDone: MutableState<Boolean>,
     var title: String,
     var description: String,
-    val dueDate: LocalDateTime?
+    var dueDate: Long?
 )
 
 fun createNewTaskItem(title: String): TaskItem {
