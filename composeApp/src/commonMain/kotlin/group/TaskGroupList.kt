@@ -1,3 +1,4 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import group.EditTaskGroup
 import group.TaskGroup
@@ -29,9 +31,17 @@ fun TaskGroupList(
     LazyColumn(state = listState) {
         itemsIndexed(taskGroups) { index, taskGroup ->
             Column(
-                modifier = Modifier.clickable {
-                    selectedIndex.value = index
-                }
+                modifier = Modifier
+                    .background(
+                        if(selectedIndex.value == index) {
+                            Color.Blue.copy(alpha = 0.2F)
+                        } else {
+                            Color.Transparent
+                        }
+                    )
+                    .clickable {
+                        selectedIndex.value = index
+                    }
             ) {
                 TaskGroupItem(
                     taskGroup = taskGroup,
