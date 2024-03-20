@@ -17,6 +17,7 @@ import group.GroupViewSmallLayout
 import group.createNewTaskGroup
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import task.AddTask
+import task.TaskDetail
 import task.TaskList
 import task.createNewTaskItem
 
@@ -27,6 +28,9 @@ fun App() {
     val selectedIndex = remember { mutableStateOf(0) }
 
     val showGroup = remember { mutableStateOf(false) }
+
+    val detailTaskItem = remember { mutableStateOf(createNewTaskItem("")) }
+    val isOpenDetail = remember { mutableStateOf(false) }
 
     if (selectedIndex.value != -1) {
         showGroup.value = false
@@ -48,7 +52,7 @@ fun App() {
                 Column(
                     modifier = Modifier.weight(7F)
                 ) {
-                    if (!isLarge) {
+                    if (!isLarge && !isOpenDetail.value) {
                         IconButton(
                             onClick = { showGroup.value = true },
                             content = {
@@ -60,12 +64,28 @@ fun App() {
                         )
                     }
 
-                    Box(modifier = Modifier.weight(1F)) {
-                        TaskList(taskGroups[selectedIndex.value].items)
-                    }
+                    if (isOpenDetail.value) {
+                        TaskDetail(
+                            taskItem = detailTaskItem.value,
+                            isOpenDetail = isOpenDetail,
+                            onDeleteItem = {
+                                taskGroups[selectedIndex.value].items.remove(detailTaskItem.value)
+                            }
+                        )
+                    } else {
+                        Box(modifier = Modifier.weight(1F)) {
+                            TaskList(
+                                taskGroups[selectedIndex.value].items,
+                                onItemClick = { taskItem ->
+                                    detailTaskItem.value = taskItem
+                                    isOpenDetail.value = true
+                                }
+                            )
+                        }
 
-                    AddTask { title ->
-                        taskGroups[selectedIndex.value].items.add(createNewTaskItem(title))
+                        AddTask { title ->
+                            taskGroups[selectedIndex.value].items.add(createNewTaskItem(title))
+                        }
                     }
                 }
             }
