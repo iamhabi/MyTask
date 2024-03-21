@@ -48,6 +48,7 @@ fun AddTask(
         Spacer(modifier = Modifier.width(8.dp))
 
         IconButton(
+            enabled = input.value != "",
             onClick = { createTask(input.value) },
             content = {
                 Icon(

@@ -48,6 +48,7 @@ fun AddTaskGroup(
         Spacer(modifier = Modifier.width(8.dp))
         
         IconButton(
+            enabled = input.value != "",
             modifier = Modifier.weight(1F),
             onClick = { createGroup(input.value) },
             content = {
