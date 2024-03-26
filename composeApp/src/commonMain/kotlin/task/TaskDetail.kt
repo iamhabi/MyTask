@@ -22,19 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskDetail(
     taskItem: TaskItem,
     isOpenDetail: MutableState<Boolean>,
     onDeleteItem: () -> Unit
 ) {
-    fun editTask(title: String, description: String) {
-        taskItem.title = title
-        taskItem.description = description
-        isOpenDetail.value = false
-    }
-
     val showDatePicker = remember { mutableStateOf(false) }
 
     val title = remember {
@@ -87,7 +80,10 @@ fun TaskDetail(
 
         OutlinedTextField(
             value = title.value,
-            onValueChange = { title.value = it },
+            onValueChange = {
+                title.value = it
+                taskItem.title = it.text
+            },
             modifier = Modifier.fillMaxWidth(),
             label = { Text("Title") },
             singleLine = true
@@ -112,22 +108,14 @@ fun TaskDetail(
 
         OutlinedTextField(
             value = description.value,
-            onValueChange = { description.value = it },
+            onValueChange = {
+                description.value = it
+                taskItem.description = it.text
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1F),
             label = { Text("Description") }
-        )
-
-        TextButton(
-            onClick = {
-                editTask(
-                    title = title.value.text,
-                    description = description.value.text
-                )
-            },
-            modifier = Modifier.align(Alignment.End),
-            content = { Text("OK") }
         )
     }
 
