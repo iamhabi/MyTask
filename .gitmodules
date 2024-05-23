@@ -1,0 +1,6 @@
+[submodule "MyTask-app"]
+	path = MyTask-app
+	url = https://github.com/iamhabi/MyTask-app.git
+[submodule "MyTask-server"]
+	path = MyTask-server
+	url = https://github.com/iamhabi/MyTask-server.git
